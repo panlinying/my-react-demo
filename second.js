@@ -1,1 +1,1 @@
-module.exports = document.write("another file");
+document.write("another file");
