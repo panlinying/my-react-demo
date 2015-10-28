@@ -1,8 +1,6 @@
 var React = require('react');
-var ReactDOM = require('react-dom');
 
-ReactDOM.render(
+React.render(
   <h1>Hello, world!</h1>,
-  document.getElementById('example1')
+  document.body
 );
-
