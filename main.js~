@@ -1,6 +1,0 @@
-var React = require('react');
-
-React.render(
-  <h1>Hey,girl!</h1>,
-  document.body
-);
