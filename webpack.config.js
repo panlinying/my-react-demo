@@ -1,34 +1,38 @@
-var webpack = require('webpack');
 var path = require('path');
-var nodeModulesPath = path.resolve(__dirname, 'node_modules');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var webpack = require('webpack');
+
+const PATHS = {
+    app:path.join(__dirname,'app'),
+    build:path.join(__dirname,'build')
+};
 
 module.exports = {
-    entry: [
-	//'webpack/hot/only-dev-server',
-      	'webpack-dev-server/client?http:/127.0.0.1:3000',
-        path.resolve(__dirname,"main.jsx")
-    ],
-    output: {
-	path: path.resolve(__dirname, "build"),
-	//publicPath: "../react/",
-        filename: "bundle.js"
+    entry:PATHS.app,
+    output:{
+        path:PATHS.build,
+        filename:'bundle.js'
     },
-    module: {
+    //plugins: [new HtmlWebpackPlugin()],
+    devServer:{
+        historyApiFallback:true,
+        hot:true,
+        inline:true,
+        progress:true,
 
-        loaders: [{test: /\.(js|jsx)$/,loaders: ['react-hot','babel-loader'],exclude: [nodeModulesPath]},
-            {test: /\.less$/, loader: "style!css!less"},
-            {test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000' }
-        ]
+        //display only errors reduce the amount of output
+        stats:'errors-only',
+
+        //parse host and port from env so this is easy
+        //to customize
+        host:process.env.HOST,
+        port:process.env.PORT
     },
-    //plugins: [
-    //   new webpack.optimize.CommonsChunkPlugin(/* chunkName= */"vendor", /* filename= */"vendor.bundle.js")
-    //],
-
-    //devServer: {
-     //   proxy:       [{
-            // proxy all requests not containing ".hot-update.js"
-            //path:   /\/api(.*)/,
-         //   target:  'http://example:8080'
-       // }]
-    //}
+    plugins:[
+        new webpack.HotModuleReplacementPlugin(),
+        new HtmlWebpackPlugin({title:'react-demo'})
+    ]
 };
+
+
+
